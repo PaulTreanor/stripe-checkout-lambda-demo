@@ -6,7 +6,7 @@
 
       <div class="px-6 pb-2">
     
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Buy me</button>
+      <button v-on:click="buy" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Buy me</button>
     </div>
   </div>
 </template>
@@ -14,6 +14,11 @@
 <script>
 export default {
   name: 'Card',
-  props: ['name', 'price']
+  props: ['name', 'price'],
+  methods: {
+    buy() {
+      console.log('You bought ' + this.name)
+    }
+  }
 }
 </script>
