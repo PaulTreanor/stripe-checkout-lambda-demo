@@ -1,10 +1,13 @@
 service: lambda-server
 frameworkVersion: '3'
+useDotenv: true
 
 provider:
   name: aws
   runtime: nodejs14.x
   region: eu-west-1
+  environment:
+    STRIPE_SECRET_KEY: ${env:STRIPE_SECRET_KEY}
 
 functions:
   hello:
@@ -13,3 +16,15 @@ functions:
       - httpApi:
           path: /
           method: get
+  createCheckoutSession:
+    handler: handler.createCheckoutSession
+    events:
+      - httpApi:
+          path: /create-checkout-session
+          method: get
+          cors: true
+      
+
+plugins:
+  - serverless-offline
+  - serverless-iam-roles-per-function
