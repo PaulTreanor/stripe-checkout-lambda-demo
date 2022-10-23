@@ -21,7 +21,7 @@ functions:
     events:
       - httpApi:
           path: /create-checkout-session
-          method: get
+          method: POST
           cors: true
       
 

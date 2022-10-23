@@ -12,12 +12,28 @@
 </template>
 
 <script>
+
+const stripe = window.Stripe("pk_test_51JChB4D7cnqRCO55PI4GPuisnGRDbO5uEUFerXCc7fInPRvGmDoQ2fV4dgflNVvLdhW2DuTBhfbpIcEBJrnpCW8000fLzWzAVA")
+
 export default {
   name: 'Card',
   props: ['name', 'price'],
   methods: {
     buy() {
       console.log('You bought ' + this.name)
+      const serverURL = "http://localhost:3000/create-checkout-session"
+      fetch(serverURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          quantity: 1 // I'm just passing a quantity of 1 for now, this is basically random just getting to do something with lambda. 
+        })
+      }).then((response) => response.json())
+      .then((session) => {
+          stripe.redirectToCheckout({sessionId: session.id}) // ID should be string id of the session 
+        })
     }
   }
 }
