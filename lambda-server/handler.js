@@ -2,6 +2,11 @@
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
+// function that calculates random number between 5000 and 100000
+const getRandomNumber = () => {
+  return Math.floor(Math.random() * 100000) + 5000;
+};
+
 module.exports = {
 
   createCheckoutSession: async (event, context) => {
@@ -18,7 +23,15 @@ module.exports = {
       mode: 'payment', 
       line_items: [
         {
-          price: 'price_1LTis2D7cnqRCO55ifhiZ5OQ',
+          // price: 'price_1LTis2D7cnqRCO55ifhiZ5OQ',
+          description: 'home heating oil',
+          price_data: {
+            currency: 'eur',
+            unit_amount: getRandomNumber (),
+            product_data: {
+              name: 'Oil',
+            },
+          },
           quantity: 1
         }
       ]
